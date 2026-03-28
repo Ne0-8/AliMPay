@@ -2,7 +2,7 @@ FROM php:8.1-fpm
 
 # 安装依赖和 Nginx
 RUN apt-get update && apt-get install -y \
-    nginx git unzip libzip-dev libonig-dev && \
+    nginx git unzip libzip-dev libonig-dev supervisor && \
     docker-php-ext-install zip pdo pdo_mysql bcmath && \
     rm -rf /var/lib/apt/lists/*
 
@@ -27,7 +27,7 @@ RUN composer dump-autoload --optimize && \
 RUN echo 'server {\n\
     listen 80;\n\
     root /var/www/html;\n\
-    index index.php health.php;\n\
+    index health.php index.php;\n\
     location / {\n\
         try_files $uri $uri/ /index.php?$query_string;\n\
     }\n\
@@ -39,7 +39,20 @@ RUN echo 'server {\n\
     }\n\
 }' > /etc/nginx/sites-available/default
 
+# Supervisor 配置
+RUN echo '[supervisord]\n\
+nodaemon=true\n\
+\n\
+[program:php-fpm]\n\
+command=php-fpm -F\n\
+autostart=true\n\
+autorestart=true\n\
+\n\
+[program:nginx]\n\
+command=nginx -g "daemon off;"\n\
+autostart=true\n\
+autorestart=true' > /etc/supervisor/conf.d/supervisord.conf
+
 EXPOSE 80
 
-# 启动脚本
-CMD php-fpm -D && nginx -g 'daemon off;'
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
