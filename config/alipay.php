@@ -34,7 +34,7 @@ return [
         
         'business_qr_mode' => [
             'enabled' => true,
-            'qr_code_path' => __DIR__ . '/../qrcode/business_qr.png',
+            'qr_code_path' => 'https://codepie.tech/static/payment-qr.jpg',
             'amount_offset' => 0.01,
             'match_tolerance' => 300,
             'payment_timeout' => 300,
