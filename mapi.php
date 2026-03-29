@@ -30,6 +30,7 @@ try {
         'name' => $_GET['name'] ?? $_POST['name'] ?? '',
         'money' => $_GET['money'] ?? $_POST['money'] ?? '',
         'sitename' => $_GET['sitename'] ?? $_POST['sitename'] ?? '',
+        'device' => $_GET['device'] ?? $_POST['device'] ?? '',
         'sign' => $_GET['sign'] ?? $_POST['sign'] ?? '',
         'sign_type' => $_GET['sign_type'] ?? $_POST['sign_type'] ?? 'MD5'
     ];
