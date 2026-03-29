@@ -668,6 +668,7 @@ try {
             'name' => $_POST['name'] ?? '',
             'money' => $_POST['money'] ?? '',
             'sitename' => $_POST['sitename'] ?? '',
+            'device' => $_POST['device'] ?? '',
             'sign' => $_POST['sign'] ?? '',
             'sign_type' => $_POST['sign_type'] ?? 'MD5'
         ];
@@ -757,6 +758,7 @@ try {
                 'name' => $_POST['name'] ?? '',
                 'money' => $_POST['money'] ?? '',
                 'sitename' => $_POST['sitename'] ?? '',
+                'device' => $_POST['device'] ?? '',
                 'sign' => $_POST['sign'] ?? '',
                 'sign_type' => $_POST['sign_type'] ?? 'MD5'
             ];
