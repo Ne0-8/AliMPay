@@ -63,35 +63,33 @@ class CodePay
     /**
      * Initialize merchant ID and key
      */
-    private function initializeMerchant(): void
-    {
-        if (file_exists($this->configFile)) {
-            $config = json_decode(file_get_contents($this->configFile), true);
-            $this->merchantId = $config['merchant_id'];
-            $this->merchantKey = $config['merchant_key'];
-            $this->logger->info('Loaded existing merchant configuration', ['merchant_id' => $this->merchantId]);
-        } else {
-            // Generate new merchant ID and key
-            $this->merchantId = '1001' . str_pad(rand(0, 999999999999), 12, '0', STR_PAD_LEFT);
-            $this->merchantKey = bin2hex(random_bytes(16));
-            
-            $config = [
-                'merchant_id' => $this->merchantId,
-                'merchant_key' => $this->merchantKey,
-                'created_at' => date('Y-m-d H:i:s'),
-                'status' => 1,
-                'balance' => '0.00',
-                'rate' => '96'
-            ];
-            
-            file_put_contents($this->configFile, json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            $this->logger->info('Generated new merchant configuration', ['merchant_id' => $this->merchantId]);
-        }
+   private function initializeMerchant(): void
+{
+    $this->merchantId = '1001614321542628';
+    $this->merchantKey = 'e7de7d4016e870b39dfa5f2c8c9f5796';
 
-        // Initialize database
-        $this->initializeDatabase();
+    if (!file_exists($this->configFile)) {
+        $config = [
+            'merchant_id'    => $this->merchantId,
+            'merchant_key'   => $this->merchantKey,
+            'created_at'     => date('Y-m-d H:i:s'),
+            'status'         => 1,
+            'balance'        => '0.00',
+            'rate'           => '96'
+        ];
+
+        file_put_contents(
+            $this->configFile, 
+            json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+        );
     }
 
+    $this->logger->info('Using fixed merchant configuration', [
+        'merchant_id' => $this->merchantId
+    ]);
+
+    $this->initializeDatabase();
+}
     private function initializeDatabase()
     {
         $databaseFile = __DIR__ . '/../../data/codepay.db';
