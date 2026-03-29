@@ -20,6 +20,7 @@ try {
         'name' => $requestData['name'] ?? '',
         'money' => $requestData['money'] ?? '',
         'sitename' => $requestData['sitename'] ?? '',
+        'device' => $requestData['device'] ?? '',
         'sign' => $requestData['sign'] ?? '',
         'sign_type' => $requestData['sign_type'] ?? 'MD5'
     ];
